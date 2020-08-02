@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bitbucket CI/CD</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="shower/themes/ribbon/styles/styles.css">
+    <style>
+        .shower {
+            --slide-ratio: calc(16 / 9);
+        }
+    </style>
+</head>
+<body class="shower list">
+
+    <header class="caption">
+        <h1>Bitbucket CI/CD</h1>
+        <p>Powered by <a href="https://github.com/shower/shower">Shower</a></p>
+    </header>
+
+    <section class="slide" id="cover">
+        <h2>Bitbucket CI/CD</h2>
+        <p>Доклад <a href="http://zakharov.cc">Дмитрия Захарова</a></p>
+        <img src="pictures/bitbucket-icon.svg" class="place bottom right main-cover" alt="Bitbucket Icon">
+        <style>
+            #cover h2 {
+                margin: 30px 0 0;
+                font-size: 70px;
+            }
+
+            #cover p {
+                margin: 10px 0 0;
+                font-style: italic;
+                font-size: 20px;
+            }
+
+            .main-cover {
+                width: 400px;
+                margin: 0 100px 100px 0;
+            }
+        </style>
+    </section>
+
+    <section class="slide">
+        <h2>GitHub Flow</h2>
+        <ol>
+            <li>Create a branch</li>
+            <li>Add commits</li>
+            <li>Open a Pull Request</li>
+            <li>Discuss and review your code</li>
+            <li>Deploy</li>
+            <li>Merge</li>
+        </ol>
+    </section>
+
+    <section class="slide">
+        <h2>Интеграция Jira и Bitbucket</h2>
+        <p>Связывание коммитов и пул реквестов с тикетми через ссылки.</p>
+        <p>Repository settings → Workflow → Links</p>
+    </section>
+
+    <section class="slide">
+        <h2>Pull request review</h2>
+        <p>Оповещение о создании или изменениях в пул реквесте.</p>
+        <p>Repository settings → Pull Requests → Default Reviewers</p>
+    </section>
+
+    <section class="slide">
+        <h2>Continuous Integration (CI)</h2>
+        <p>Постоянное слияние кода в рабочую ветку с выполнением авто-тестов и сборок.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Сontinuous Delivery (CD)</h2>
+        <p>Постоянное развертывание нового кода на серверах.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Bitbucket Pipelines</h2>
+        <p>CI/CD сервис интегрированный в Битбакет. Нужно включить, чтобы начать пользоваться.</p>
+        <p>Repository settings → Pipelines → Settings</p>
+    </section>
+
+    <section class="slide">
+        <h2>bitbucket-pipelines.yml</h2>
+        <pre>
+            <code>pipelines:</code>
+            <code>  default:</code>
+            <code>    - step:</code>
+            <code>        image: node:12.18.3</code>
+            <code>        script:</code>
+            <code>          - npm install</code>
+            <code>          - npm test</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Артефакты</h2>
+        <p>Это файлы созданные шагом в пайплайне, которые можно передавать следующим шагам или скачать.</p>
+        <p><a href="https://support.atlassian.com/bitbucket-cloud/docs/use-artifacts-in-steps/">Use artifacts in steps</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>Branch workflows</h2>
+        <p>Поведение пайплайна можно контролировать в зависимости от ветки.</p>
+        <figure>
+            <img class="gif" src="pictures/pipelines_yml_in_action.gif" alt="Pipelines in action">
+            <figcaption class="copyright right white">
+                <a href="https://atlassian.com/">© Atlassian</a>
+            </figcaption>
+        </figure>
+        <style>
+            .gif {
+                width: 700px;
+            }
+        </style>
+    </section>
+
+    <section class="slide">
+        <h2>Переменные окружения</h2>
+        <p>Сервис предоставляет переменные окружения, которые могут использоваться в пайплайнах. Так же можно определить свои переменные окружения, в т.ч. и зашифрованные.</p>
+        <p><a href="https://support.atlassian.com/bitbucket-cloud/docs/variables-in-pipelines/">Variables in pipelines</a></p>
+        <p>Repository settings → Pipelines → Repository variables</p>
+    </section>
+
+    <section class="slide">
+        <h2>SSH keys</h2>
+        <ul>
+            <li>Получение зависимостей из приватных репозиториев.</li>
+            <li>Аутентификация с удаленным сервисом или хостом для загрузки артефактов.</li>
+            <li>Использование инструментов, вроде: SSH, SFTP или SCP.</li>
+        </ul>
+        <p>Repository settings → Pipelines → SSH Keys</p>
+    </section>
+
+    <section class="slide">
+        <h2>Использование сервисов и баз данных</h2>
+        <pre>
+            <code>pipelines: ...</code>
+            <code>definitions:</code>
+            <code>    services:</code>
+            <code>        postgres:</code>
+            <code>            image: postgres:12.3</code>
+            <code>            variables:</code>
+            <code>                POSTGRES_PASSWORD: $PG_PASS</code>
+            <code>                POSTGRES_USER: $PG_USER</code>
+            <code>                POSTGRES_DB: $PG_DB_NAME</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Способы доставки кода</h2>
+        <ul>
+            <li>Package</li>
+            <li>Git pull</li>
+            <li>Docker container</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Deployments</h2>
+        <p>На проекте несколько сред для развертывания: dev, test, prod.</p>
+        <p>Repository settings → Pipelines → Deployments</p>
+    </section>
+
+    <section class="slide">
+        <h2>Pipes</h2>
+        <p>Облегчают сложные задачи, делая всю работу "под капотом". Например: подключение по ssh, копирование файлов на сервер по scp, изменение статуса тикета в Jira.</p>
+        <p><a href="https://bitbucket.org/atlassian/workspace/projects/BPP">Bitbucket Pipelines Pipes</a></p>
+    </section>
+
+
+    <section class="slide">
+        <h2 class="shout">Вопросы?</h2>
+    </section>
+
+    <section class="slide">
+        <h2 class="shout">Спасибо!</h2>
+    </section>
+
+    <footer class="badge">
+        <a href="https://github.com/toolen/bitbucket-ci-cd">GitHub</a>
+    </footer>
+
+    <div class="progress"></div>
+
+    <script src="shower/shower.js"></script>
+    <!-- Copyright © 2018 Dmitrii Zakharov. -->
+
+</body>
+</html>
